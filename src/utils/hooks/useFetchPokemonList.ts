@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Pokemon} from "pokenode-ts";
 import {pokemonApi} from "../../main";
+import {extractPokemonId} from "../functions/getExactPockemonId";
 
 interface IUseFetchPokemonListReturn {
     pokemonList: Pokemon[] | null;
@@ -17,12 +18,15 @@ export const useFetchPokemonList = (): IUseFetchPokemonListReturn => {
         const fetchPokemonList = async () => {
             setIsLoading(true);
             try {
-                // First, get the list of Pokémon names or URLs
+                // First, get the list of Pokémon ids from URLs
                 const listResponse  = await pokemonApi.listPokemons(0, 10);
-                const pokemonNames = listResponse.results.map(p => p.name);
+                const pokemonIds: number[] = listResponse.results.map(p => {
+                    const id = extractPokemonId(p.url);
+                    return id ? id : 0
+                });
 
                 // Then, fetch details for each Pokémon concurrently
-                const detailPromises = pokemonNames.map(name => pokemonApi.getPokemonByName(name));
+                const detailPromises = pokemonIds.map(id => pokemonApi.getPokemonById(id));
                 const details = await Promise.all(detailPromises);
                 if (!details) {
                     throw new Error(`An error occurred`);

@@ -15,18 +15,20 @@ interface IPokemonContextType {
     isListLoading: boolean;
     isTypesLoading: boolean;
     getPokemonById: (id: number) => Pokemon | undefined;
+    listError: Error | null;
+    typesError: Error | null;
 }
 
 export const PokemonContext = createContext<IPokemonContextType>(null!);
 
 export const PokemonContextProvider: FC<{ children: ReactNode }> = ({children}) => {
     const [filter, setFilter] = useState<IPokemonFilter>(PokemonFilterDefault);
-    const {isLoading: isListLoading, pokemonList} = useFetchPokemonList();
-    const {isLoading: isTypesLoading, pokemonTypes} = useFetchPokemonTypes();
+    const {isLoading: isListLoading, pokemonList, error: listError} = useFetchPokemonList();
+    const {isLoading: isTypesLoading, pokemonTypes, error: typesError} = useFetchPokemonTypes();
 
     const filteredPokemonList = useMemo(() => filterPokemonList(filter, pokemonList), [filter, pokemonList]);
 
-    // Avoid getting new data and use stored data from context
+    // Avoid getting new data and use stored data from context (if needed)
     const getPokemonById = (id: number): Pokemon | undefined => filteredPokemonList.find((pokemon) => pokemon.id === id);
 
     const globalObj = {
@@ -36,7 +38,9 @@ export const PokemonContextProvider: FC<{ children: ReactNode }> = ({children}) 
         isTypesLoading,
         list: filteredPokemonList,
         types: pokemonTypes,
-        getPokemonById
+        getPokemonById,
+        listError,
+        typesError,
     };
 
     return <PokemonContext.Provider value={globalObj}>{children}</PokemonContext.Provider>;

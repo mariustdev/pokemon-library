@@ -1,18 +1,29 @@
 import {FC} from "react";
-import {Pokemon} from "pokenode-ts";
 import {Each} from "../../../../../commons/components/Each";
 import PokemonListItem from "./PokemonListItem";
+import {usePokemon} from "../../../../../utils/hooks/usePokemon";
+import NoResultsContainer from "../../../../../commons/components/NoResultsContainer";
+import LoadingContainer from "../../../../../commons/components/LoadingContainer";
+import ErrorContainer from "../../../../../commons/components/ErrorContainer";
 
-interface IPokemonListProps {
-    pokemonList: Pokemon[];
+const PokemonList:FC = () => {
+    const {list, isListLoading, listError} = usePokemon();
+
+    if (isListLoading) return <LoadingContainer />;
+
+    if (listError) return <ErrorContainer errorMessage={listError.message}/>;
+
+    if (list.length === 0) return <NoResultsContainer />;
+
+    return (
+        <ul role="list" className="divide-y divide-gray-100">
+            <Each of={list} render={(pokemon) =>
+                <PokemonListItem pokemon={pokemon} />
+            } />
+        </ul>
+    )
 }
 
-const PokemonList:FC<IPokemonListProps> = ({pokemonList}) => (
-    <ul role="list" className="divide-y divide-gray-100">
-        <Each of={pokemonList} render={(pokemon) =>
-            <PokemonListItem pokemon={pokemon} />
-        } />
-    </ul>
-);
+
 
 export default PokemonList;
