@@ -6,6 +6,10 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import PageNotFound from "./pages/404/PageNotFound";
 import PokemonDetailPage from "./pages/pokemon/detail/PokemonDetailPage";
 import PokemonListPage from "./pages/pokemon/list/PokemonListPage";
+import {PokemonClient} from "pokenode-ts";
+
+// Api configuration
+export const pokemonApi = new PokemonClient();
 
 // Router configuration
 const router = createBrowserRouter([
