@@ -7,7 +7,7 @@ interface ICloseIconNavigateProps {
 }
 
 const CloseIconNavigate: FC<ICloseIconNavigateProps> = ({navigate}) => (
-    <button className={'p-1 absolute top-3 right-3'} onClick={() => navigate(`/`)}>
+    <button className="p-1 absolute top-3 right-3" onClick={() => navigate(`/`)}>
         <XMarkIcon className="h-8 w-8" aria-hidden="true"/>
     </button>
 );

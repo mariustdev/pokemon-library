@@ -5,7 +5,7 @@ const PokemonFilterInput: FC = () => {
     const {filter, setFilter} = usePokemon();
 
     return (
-        <div className={'col-span-4'}>
+        <div className="col-span-4">
             <div className="mt-2">
                 <input
                     id="search"

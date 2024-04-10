@@ -19,7 +19,7 @@ const PokemonListItem: FC<IPokemonListItemProps> = ({pokemon}) => {
                 </div>
             </div>
             <div className="shrink-0 sm:flex sm:flex-col sm:justify-center">
-                <button className={'p-1'} onClick={() => navigate(`/pokemon/${pokemon.id}`)}>
+                <button className="p-1" onClick={() => navigate(`/pokemon/${pokemon.id}`)}>
                     <ArrowRightIcon className="h-6 w-6" aria-hidden="true"/>
                 </button>
             </div>

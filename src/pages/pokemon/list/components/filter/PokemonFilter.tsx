@@ -12,7 +12,7 @@ const PokemonFilter: FC = () => {
                     <PokemonFilterTypeSelect />
                 </div>
             </div>
-            <div className={'border-b border-gray-300 pb-5'}></div>
+            <div className="border-b border-gray-300 pb-5"></div>
         </div>
     )
 }
